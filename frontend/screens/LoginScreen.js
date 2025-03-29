@@ -1,24 +1,31 @@
 import React, { useState } from "react";
-import { TextInput, StyleSheet, View, Text, TouchableOpacity, Alert, Button } from "react-native";
+import { TextInput, StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 import Header from "../components/Header";
-// import BottomTabNavigator from "../navigation/BottomTabNavigator";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
-export default function LoginScreen({ navigation }) {
+const auth = getAuth();
+
+export default function LoginScreen() {
     const [email, setEmail] = useState("");
-    const [password, setPassWord] = useState("");
+    const [password, setPassword] = useState("");
+    const navigation = useNavigation();
 
-    const handleRegister = () => {
+    const login = async (email, password) => {
         if (!email || !password) {
             Alert.alert("Error", "All fields are required");
             return;
         }
-        Alert.alert("Success", "Registered successfully!");
-        navigation.navigate("Home");
-    };
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            console.log("User logged in successfully:", userCredential.user);
+            Alert.alert("Success", "Logged in successfully!");
 
-    function handleForgetPassword() {
-        navigation.navigate("ForgetPassword");
-    }
+            navigation.navigate("Home");  
+        } catch (error) {
+            Alert.alert("Login Failed", error.message);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -35,15 +42,18 @@ export default function LoginScreen({ navigation }) {
                 style={styles.input}
                 placeholder="Password"
                 value={password}
-                onChangeText={setPassWord}
+                onChangeText={setPassword}
                 secureTextEntry
                 autoCapitalize="none"
             />
-            <TouchableOpacity style={styles.button} onPress={handleRegister}>
-                <Text style={styles.buttonText}>Register</Text>
+            <TouchableOpacity style={styles.button} onPress={() => login(email, password)}>
+                <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleForgetPassword}>
+            <TouchableOpacity onPress={() => navigation.navigate("ForgetPassword")}>
                 <Text style={styles.forgetPasswordText}>Forgot Password?</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                <Text style={styles.registerText}>Don't have an account? Register</Text>
             </TouchableOpacity>
         </View>
     );
@@ -81,5 +91,10 @@ const styles = StyleSheet.create({
     forgetPasswordText: {
         color: "#007BFF",
         marginTop: 10,
+    },
+    registerText: {
+        color: "#007BFF",
+        marginTop: 10,
+        fontSize: 16,
     },
 });
