@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "BloodConnectPlus",
+    "slug": "BloodConnectPlus",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo-img.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/logo-img.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo-img.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/images/logo-img.png"
+    }
+  }
+}
