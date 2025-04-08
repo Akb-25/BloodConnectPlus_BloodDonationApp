@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "bloodconnectplus",
+  "private_key_id": "efffb750c71903c59bb512d0a436742cf3cf5568",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCxkPHnlH2y4fL3\nHnqyebXRwLYs0EgywsOsbZLoLGnmEB3Q3SS6sLEQUthAbtcYVsWvP3fy1KAOxNMU\nqhh98IldLA4siHJz4oLP/a2mRGJT+UIV0k7Lx00XNSHbOQ+ifoH1LC6M35rGqu9r\nKGpkx7uIU+P8rHgIJfYDD8Radf2oC7vZruQzbeSsRy36gYoLlBqDqkXWmq8VlvPi\ng6WMys9jf1Zamwr4lfOJrvw3aFa/lOxbY9rd2QuYcynQSEHKye94/XWDvmebz+m1\n1ifmh3CuQuu4JDv818MScBDuZP7iuQ/l3hPKucszF9jfeyt8P9rqmAWluuebWHch\n0Gbh1eMTAgMBAAECggEAAUT0fb/RgDheSMb2gJUfKB81Di/0/CvpQy/LV46NuT/P\nPsF99Dm0IlY9RoSkU/+2zRBqlplPhZuBmMm4gBn6mWhpt4bILqzlW4BIQAKII2qK\nPuaweoNzuSE/mzYWtwYpfquwr4AftqDdMkppLExDOm/DFvjSqNhAoHf54t2qEQv1\nXUKreq8K5uBUXq10ObbDxz3cA1zjvS0HaUv1QynGUW6arO70QmNwrM7mXjfwVA9R\nc35ppgDUmLaqzPW+ASLF+dKv6fVFMXVgFDspSfYlYwFtOKuVlsN9gYfU9/DQDIzs\n2tzcyj3h9umuzLLUPgxibjuHGD+iGQwnoHmwCKToLQKBgQDq+6+EGVURlH67bIBB\n9EgODxz4/piZuq/GgBsxe9FtJTO3B6ThuoIT5U3FmDTsl1YdMj5sT57Cq97zuemw\nnsjDijnWZaGoCKQITVAf2c/r2gM5u5Iez0CSfTokJjpwdgwPt94ogK3DAOMNnQBQ\n4pzWNfKuBMGqUYOAmJanPt/yZQKBgQDBcps/q28c55I3iXTnSDUaYrfINt2wxvLg\ntP1SZRpz46GgH4bbvHdJyTj0cJZKvRDnTmCkJrET5ZrCuOhJHEeZcC1/nmvlsxmO\nBTdV2R2Cj4BSlSEiubSMpN9RLNP0ImBHmp6ScDPO7updOEz8i6I10ecB9l1Rrjxq\nTpYW4hrsFwKBgQDkKPFpIHe7FCZhsZ5va9Oy4vXMxthBHEWkRashxwm4IpEuPJva\nGZBH5TQ4keuBdghFXQ3DeSO7/coDeRbxSZvCUaqLBC+MyqcK8JbF9mWuqgbLvdbJ\nV49pLXKQuxWvMM/RS0TIqvkNCQVtqG4wG3kRfVxfn3qz92XqLT7KsYAdCQKBgEg5\n1xclld3P5DrSGpDD1/fbBc0+FvWKwmH9kVtzHjZIti7Htp1SN6OX+qjhZGvRPX9v\nNwvy2kiYgHjVevzZDy6NwJ8WciiX/yGUdv2Zi7gUhg/PWEjT10JvyGVRfG15bEMv\nyqbYN6+6akyV2cCtDcpUbZDBAESf7jSu1MEEeJLPAoGBALK9UeSBMRFj3ulw0M3L\nKZKQJa2RlEl1zRYgMrph4n/JfOAD8v5ljIS7Hvo0UHpKYR2qaalvtRUo1eQi8DnV\nJa4MNsdIPKto+lD1NwrZ2QBgx+LE7+Sul7tmM+dsvk4VBEqWqdsHfbGFEeFqclPs\nPbvSiIPY2zCepKEK7uf51vpC\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@bloodconnectplus.iam.gserviceaccount.com",
+  "client_id": "107660962675613649716",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40bloodconnectplus.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -1,28 +1,23 @@
 import React, { useState } from "react";
 import { TextInput, StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 import Header from "../components/Header";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../config/firebase.js";
 
-const auth = getAuth();
 
 export default function RegisterScreen() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
 
-    const API_URL = "http://192.168.x.x:5000/api/auth/register"; 
-
     const register = async (email, password) => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            await axios.post(API_URL, {
-                email: user.email,
-                password,
-            });
+            console.log("User registered is :" + user );
 
             Alert.alert("Success", "Registered successfully!");
             navigation.navigate("Home");
@@ -40,6 +35,7 @@ export default function RegisterScreen() {
         register(email, password);
     };
 
+    
     return (
         <View style={styles.container}>
             <Header title="Register" />

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { TextInput, StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 import Header from "../components/Header";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../config/firebase.js";
 
-const auth = getAuth();
 
 export default function LoginScreen() {
     const [email, setEmail] = useState("");
@@ -18,6 +18,7 @@ export default function LoginScreen() {
         }
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = auth.currentUser;
             console.log("User logged in successfully:", userCredential.user);
             Alert.alert("Success", "Logged in successfully!");
 
