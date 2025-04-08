@@ -1,20 +1,41 @@
 import React, { useState } from "react";
 import { TextInput, StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 import Header from "../components/Header";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import { auth } from "../config/firebase.js";
 
-export default function RegisterScreen({ navigation }) {
+
+export default function RegisterScreen() {
     const [email, setEmail] = useState("");
-    const [password, setPassWord] = useState("");
+    const [password, setPassword] = useState("");
+    const navigation = useNavigation();
+
+    const register = async (email, password) => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            console.log("User registered is :" + user );
+
+            Alert.alert("Success", "Registered successfully!");
+            navigation.navigate("Home");
+
+        } catch (error) {
+            Alert.alert("Registration Failed", error.message);
+        }
+    };
 
     const handleRegister = () => {
         if (!email || !password) {
             Alert.alert("Error", "All fields are required");
             return;
         }
-        Alert.alert("Success", "Registered successfully!");
-        navigation.navigate("Home");
+        register(email, password);
     };
 
+    
     return (
         <View style={styles.container}>
             <Header title="Register" />
@@ -30,7 +51,7 @@ export default function RegisterScreen({ navigation }) {
                 style={styles.input}
                 placeholder="Password"
                 value={password}
-                onChangeText={setPassWord}
+                onChangeText={setPassword}
                 secureTextEntry
                 autoCapitalize="none"
             />

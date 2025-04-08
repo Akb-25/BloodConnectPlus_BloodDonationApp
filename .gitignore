@@ -1,1 +1,6 @@
 frontend/node_modules
+backend/node_modules
+backend/bloodconnectplus_key.json
+backend/.env
+backend/README.md
+backend/src/node_modules

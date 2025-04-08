@@ -3,7 +3,9 @@ import { ScrollView, View, Text, TextInput, TouchableOpacity, StyleSheet } from 
 import { Picker } from "@react-native-picker/picker";
 import Header from "../components/Header";
 
-export default function ProfileStep2({ navigation }) {
+export default function ProfileStep2({ route, navigation }) {
+    const { name, phone, selectedCity, selectedCountry } = route.params;
+
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [gender, setGender] = useState("");
     const [aboutYourself, setAboutYourself] = useState("");
@@ -80,7 +82,7 @@ export default function ProfileStep2({ navigation }) {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() =>
-                    navigation.navigate("ProfileStep3", { dateOfBirth, gender, aboutYourself, isDonor, occupation })
+                    navigation.navigate("ProfileStep3", { name, phone, selectedCity, selectedCountry, dateOfBirth, gender, aboutYourself, isDonor, occupation })
                 }
             >
                 <Text style={styles.buttonText}>➡️ Next</Text>
