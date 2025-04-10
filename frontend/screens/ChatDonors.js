@@ -1,36 +1,68 @@
-import React from "react";
-import { ScrollView, Text, StyleSheet, Image, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ScrollView, Text, StyleSheet, Image, TouchableOpacity, View, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
+import axios from "axios";
+import { getCurrentUserId } from "../utils/auth"; // implement this to return logged-in user ID
 
 const ChatDonors = () => {
   const navigation = useNavigation();
+  const [chats, setChats] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const chats = [
-    { id: 1, name: "John Doe", message: "Hey, I am available to donate blood." },
-    { id: 2, name: "Jane Smith", message: "I donated last month, but I can help with logistics." },
-    { id: 3, name: "Emily Johnson", message: "Let me know if you need more donors." },
-  ];
+  const fetchChats = async () => {
+    try {
+      const uid = await getCurrentUserId();
+      const res = await axios.get(`http://<YOUR_SERVER_URL>/api/chat/${uid}`);
+      setChats(res.data);
+    } catch (err) {
+      console.error("Error fetching chats:", err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchChats();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Contact Donors" />
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {chats.map((chat) => (
-          <TouchableOpacity
-            key={chat.id}
-            style={styles.chatItem}
-            activeOpacity={0.8}
-            // onPress={() => navigation.navigate("ChatDetail", { chatId: chat.id })}
-          >
-            <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.avatar} />
-            <View style={styles.textContainer}>
-              <Text style={styles.name}>{chat.name}</Text>
-              <Text style={styles.message}>{chat.message}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+        {loading ? (
+          <ActivityIndicator size="large" color="#e63946" />
+        ) : chats.length === 0 ? (
+          <Text style={styles.noChats}>No chats available</Text>
+        ) : (
+          chats.map((chat) => {
+            const otherUser = chat.membersDetails.find((u) => u.id !== getCurrentUserId());
+            return (
+              <TouchableOpacity
+                key={chat.chatId}
+                style={styles.chatItem}
+                activeOpacity={0.8}
+                onPress={() =>
+                  navigation.navigate("ChatScreen", {
+                    chatId: chat.chatId,
+                    receiverId: otherUser.id,
+                    receiverName: otherUser.name,
+                    receiverPhoto: otherUser.photoURL,
+                  })
+                }
+              >
+                <Image source={{ uri: otherUser.photoURL || "https://via.placeholder.com/150" }} style={styles.avatar} />
+                <View style={styles.textContainer}>
+                  <Text style={styles.name}>{otherUser.name}</Text>
+                  <Text style={styles.message} numberOfLines={1}>
+                    {chat.lastMessage}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })
+        )}
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("ChatScreen")}>
           <Text style={styles.buttonText}>Start New Chat</Text>
         </TouchableOpacity>
@@ -40,14 +72,8 @@ const ChatDonors = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  scrollContent: {
-    padding: 16,
-    marginTop: 62
-  },
+  container: { flex: 1, backgroundColor: "#fff" },
+  scrollContent: { padding: 16, marginTop: 62 },
   chatItem: {
     flexDirection: "row",
     backgroundColor: "#fff",
@@ -69,9 +95,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#e63946",
   },
-  textContainer: {
-    flex: 1,
-  },
+  textContainer: { flex: 1 },
   name: {
     fontSize: 17,
     fontWeight: "600",
@@ -98,6 +122,12 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "600",
+  },
+  noChats: {
+    textAlign: "center",
+    color: "#6c757d",
+    fontSize: 16,
+    marginTop: 20,
   },
 });
 

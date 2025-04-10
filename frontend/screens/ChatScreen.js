@@ -1,22 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View, ScrollView, Text, TextInput, StyleSheet,
   TouchableOpacity, KeyboardAvoidingView,
   Platform, SafeAreaView
 } from "react-native";
-
-const ChatScreen = () => {
-  const [messages, setMessages] = useState([
-    { id: "1", text: "Hi there!", sender: "donor" },
-    { id: "2", text: "How can I help you today?", sender: "donor" },
-    { id: "3", text: "I'm available to donate blood.", sender: "donor" },
-  ]);
+import axios from "axios";
+import { auth } from "../firebaseConfig"; 
+const ChatScreen = ({ route }) => {
+  const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
-  const donorName = "Jacob Fatu";
+
+  const currentUserId = auth.currentUser?.uid;
+  const donorId = route.params?.donorId || "donorUID"; 
+  const donorName = route.params?.donorName || "Donor";
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const res = await axios.get(`http://<YOUR_BACKEND_URL>/api/messages/${currentUserId}/${donorId}`);
+        setMessages(res.data);
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
+    };
+    fetchMessages();
+  }, [currentUserId, donorId]);
 
   const sendMessage = () => {
     if (inputMessage.trim() !== "") {
-      setMessages([...messages, { id: Date.now().toString(), text: inputMessage, sender: "user" }]);
+      const newMessage = {
+        id: Date.now().toString(),
+        text: inputMessage,
+        senderId: currentUserId,
+      };
+      setMessages((prev) => [...prev, newMessage]);
       setInputMessage("");
     }
   };
@@ -38,7 +55,7 @@ const ChatScreen = () => {
               key={item.id}
               style={[
                 styles.messageContainer,
-                item.sender === "user" ? styles.sentMessage : styles.receivedMessage,
+                item.senderId === currentUserId ? styles.sentMessage : styles.receivedMessage,
               ]}
             >
               <Text style={styles.messageText}>{item.text}</Text>
