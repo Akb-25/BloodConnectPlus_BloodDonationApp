@@ -14,6 +14,7 @@ export default function IntroScreen({ navigation }){
             <Button title="Profile Creation" onPress = { () => navigation.navigate("ProfileNavigator")}></Button>
             <Button title="Request Creation" onPress = { () => navigation.navigate("RequestNavigator")}></Button>
             <Button title="Eligibility Screen" onPress = { () => navigation.navigate("EligibilityNavigator")}></Button>
+            <Button title="Text Screen" onPress = { () => navigation.navigate("ChatNavigator")}></Button>
         </View>
     )
 }

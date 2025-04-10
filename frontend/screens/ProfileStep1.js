@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { ScrollView, View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import Header from "../components/Header";
 
@@ -31,69 +31,82 @@ export default function ProfileStep1({ navigation }) {
     };
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Header title="Profile Setup"/>
-            <Text style={styles.label}>Enter Your Name</Text>
-            <TextInput
-                value={name}
-                onChangeText={setName}
-                style={styles.input}
-                placeholder="Your Name"
-            />
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={{ flex: 1 }}>
+            <Header title="Profile Setup" />
+            <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+                
+                <Text style={styles.label}>Enter Your Name</Text>
+                <TextInput
+                    value={name}
+                    onChangeText={setName}
+                    style={styles.input}
+                    placeholder="Your Name"
+                />
 
-            <Text style={styles.label}>Enter Your Phone Number</Text>
-            <TextInput
-                value={phone}
-                onChangeText={setPhone}
-                keyboardType="numeric"
-                style={styles.input}
-                placeholder="Your Phone Number"
-            />
+                <Text style={styles.label}>Enter Your Phone Number</Text>
+                <TextInput
+                    value={phone}
+                    onChangeText={setPhone}
+                    keyboardType="numeric"
+                    style={styles.input}
+                    placeholder="Your Phone Number"
+                />
 
-            <Text style={styles.label}>Enter Your Country</Text>
-            <RNPickerSelect
-                onValueChange={(value) => {
-                    setSelectedCountry(value);
-                    setSelectedCity(null); // Reset city when country changes
-                }}
-                items={countries}
-                style={pickerSelectStyles}
-                placeholder={{ label: "Select a country", value: null }}
-            />
-
-            {selectedCountry && (
-                <>
-                    <Text style={styles.label}>Enter Your City</Text>
+                <Text style={styles.label}>Select Your Country</Text>
+                <View style={styles.pickerContainer}>
                     <RNPickerSelect
-                        onValueChange={(value) => setSelectedCity(value)}
-                        items={cities[selectedCountry] || []}
+                        onValueChange={(value) => {
+                            setSelectedCountry(value);
+                            setSelectedCity(null);
+                        }}
+                        items={countries}
                         style={pickerSelectStyles}
-                        placeholder={{ label: "Select a city", value: null }}
+                        placeholder={{ label: "Select a country", value: null }}
                     />
-                </>
-            )}
+                </View>
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() =>
-                    navigation.navigate("ProfileStep2", { name, phone, selectedCity, selectedCountry })
-                }
-            >
-                <Text style={styles.buttonText}>➡️ Next</Text>
-            </TouchableOpacity>
+                {selectedCountry && (
+                    <>
+                        <Text style={styles.label}>Select Your City</Text>
+                        <View style={styles.pickerContainer}>
+                            <RNPickerSelect
+                                onValueChange={(value) => setSelectedCity(value)}
+                                items={cities[selectedCountry] || []}
+                                style={pickerSelectStyles}
+                                placeholder={{ label: "Select a city", value: null }}
+                            />
+                        </View>
+                    </>
+                )}
+            </ScrollView>
 
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                <Text style={styles.backButtonText}>⬅️ Back</Text>
-            </TouchableOpacity>
-        </ScrollView>
+            <View style={styles.footerButtons}>
+                <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={() => navigation.goBack()}
+                >
+                    <Text style={styles.backButtonText}>⬅️ Back</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.nextButton}
+                    onPress={() =>
+                        navigation.navigate("ProfileStep2", { name, phone, selectedCity, selectedCountry })
+                    }
+                >
+                    <Text style={styles.nextButtonText}>Next ➡️</Text>
+                </TouchableOpacity>
+            </View>
+        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
+        marginTop: 100,
         padding: 20,
         backgroundColor: "#f8f9fa",
+        paddingBottom: 100,
     },
     label: {
         fontSize: 16,
@@ -102,55 +115,67 @@ const styles = StyleSheet.create({
         color: "#333",
     },
     input: {
-        height: 40,
+        height: 45,
         borderColor: "#ccc",
         borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
+        borderRadius: 10,
+        paddingHorizontal: 12,
         marginBottom: 20,
         backgroundColor: "#fff",
     },
-    button: {
-        backgroundColor: "#007bff",
-        padding: 12,
-        borderRadius: 5,
-        alignItems: "center",
-        marginTop: 20,
+    pickerContainer: {
+        marginBottom: 20,
+        borderColor: "#ccc",
+        borderWidth: 1,
+        borderRadius: 10,
+        overflow: "hidden",
+        backgroundColor: "#fff",
     },
-    buttonText: {
+    footerButtons: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingHorizontal: 20,
+        paddingBottom: 20,
+        paddingTop: 10,
+        backgroundColor: "#f8f9fa",
+    },
+    nextButton: {
+        backgroundColor: "red",
+        paddingVertical: 12,
+        paddingHorizontal: 25,
+        borderRadius: 8,
+    },
+    nextButtonText: {
         color: "#fff",
-        fontSize: 16,
         fontWeight: "bold",
+        fontSize: 16,
     },
     backButton: {
-        marginTop: 10,
-        alignItems: "center",
+        backgroundColor: "#fff",
+        paddingVertical: 12,
+        paddingHorizontal: 25,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#000",
     },
     backButtonText: {
-        color: "red",
+        color: "#000",
+        fontWeight: "bold",
         fontSize: 16,
     },
 });
 
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
-        height: 40,
-        borderColor: "#ccc",
-        borderWidth: 1,
-        borderRadius: 5,
+        fontSize: 16,
+        paddingVertical: 12,
         paddingHorizontal: 10,
-        marginBottom: 20,
-        backgroundColor: "#fff",
         color: "#333",
     },
     inputAndroid: {
-        height: 40,
-        borderColor: "#ccc",
-        borderWidth: 1,
-        borderRadius: 5,
+        fontSize: 16,
+        paddingVertical: 12,
         paddingHorizontal: 10,
-        marginBottom: 20,
-        backgroundColor: "#fff",
         color: "#333",
     },
 });
