@@ -91,10 +91,27 @@ export default function RequestScreen({ navigation }) {
                 }}
                 style={styles.picker}
             >
+                <Picker.Item label="Select Country" value="" />
                 {countries.map((country) => (
                     <Picker.Item key={country.value} label={country.label} value={country.value} />
                 ))}
             </Picker>
+
+            {recipientSelectedCountry !== "" && (
+                <>
+                    <Text style={styles.label}>Recipient's City</Text>
+                    <Picker
+                        selectedValue={recipientSelectedCity}
+                        onValueChange={setRecipientSelectedCity}
+                        style={styles.picker}
+                    >
+                        <Picker.Item label="Select City" value="" />
+                        {cities[recipientSelectedCountry].map((city) => (
+                            <Picker.Item key={city.value} label={city.label} value={city.value} />
+                        ))}
+                    </Picker>
+                </>
+            )}
 
                     
             <Text style={styles.label}>Date</Text>
@@ -239,67 +256,81 @@ export default function RequestScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        padding: 16,
-        backgroundColor: "#f8f9fa",
+        padding: 20,
+        backgroundColor: "#f2f2f2",
     },
     title: {
-        marginTop: 86,
-        fontSize: 22,
+        marginTop: 100,
+        fontSize: 24,
         fontWeight: "bold",
-        color: "#333",
-        marginBottom: 16,
+        color: "#1a1a1a",
+        marginBottom: 24,
         textAlign: "center",
     },
     label: {
         fontSize: 16,
-        fontWeight: "bold",
-        color: "#555",
-        marginBottom: 8,
+        fontWeight: "600",
+        color: "#333",
+        marginBottom: 6,
+        marginTop: 10,
     },
     input: {
-        height: 40,
-        borderColor: "#ccc",
+        height: 45,
+        borderColor: "#ddd",
         borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        marginBottom: 16,
+        borderRadius: 12,
+        paddingHorizontal: 15,
         backgroundColor: "#fff",
+        marginBottom: 16,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 1,
+        textAlignVertical: "center",
     },
     picker: {
         height: 50,
-        borderColor: "#ccc",
+        borderColor: "#ddd",
         borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 12,
         marginBottom: 16,
         backgroundColor: "#fff",
+        justifyContent: "center",
     },
     textarea: {
         height: 100,
-        borderColor: "#ccc",
+        borderColor: "#ddd",
         borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
+        borderRadius: 12,
+        paddingHorizontal: 15,
         paddingVertical: 10,
-        marginBottom: 16,
         backgroundColor: "#fff",
         textAlignVertical: "top",
+        marginBottom: 16,
     },
     button: {
-        backgroundColor: "#007bff",
-        padding: 12,
-        borderRadius: 5,
+        backgroundColor: "#ff4d4d",
+        padding: 15,
+        borderRadius: 14,
         alignItems: "center",
-        marginTop: 20,
+        marginTop: 30,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 3,
     },
     buttonText: {
         color: "#fff",
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: "bold",
     },
     backText: {
         fontSize: 16,
-        color: "red",
-        marginTop: 10,
+        color: "#333",
+        marginTop: 20,
         textAlign: "center",
+        fontWeight: "600",
     },
 });

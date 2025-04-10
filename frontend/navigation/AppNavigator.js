@@ -1,31 +1,89 @@
-import React from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-// import WelcomeScreen from "../screens/WelcomeScreen";
+import { View, ActivityIndicator } from "react-native";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../config/firebase.js"; // ensure this is correctly imported
+
+// Screens
 import IntroScreen from "../screens/IntroScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
-// import BottomTabNavigator from "./BottomTabNavigator";
+
+// Navigators
 import ProfileNavigator from "./ProfileNavigator";
 import RequestNavigator from "./RequestNavigator";
 import EligibilityNavigator from "./EligibilityNavigator";
+import ChatNavigator from "./ChatNavigator";
+
+// Context
+const AuthenticatedUserContext = createContext({});
+
+const AuthenticatedUserProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    return (
+        <AuthenticatedUserContext.Provider value={{ user, setUser }}>
+            {children}
+        </AuthenticatedUserContext.Provider>
+    );
+};
+
 const Stack = createStackNavigator();
 
-export default function AppNavigator(){
+function AuthStack() {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+        </Stack.Navigator>
+    );
+}
+
+function AppStack() {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Intro" component={IntroScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="ProfileNavigator" component={ProfileNavigator} />
+            <Stack.Screen name="RequestNavigator" component={RequestNavigator} />
+            <Stack.Screen name="EligibilityNavigator" component={EligibilityNavigator} />
+            <Stack.Screen name="ChatNavigator" component={ChatNavigator} />
+        </Stack.Navigator>
+    );
+}
+
+function AppNavigator() {
+    const { user, setUser } = useContext(AuthenticatedUserContext);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, authenticatedUser => {
+            setUser(authenticatedUser || null);
+            setLoading(false);
+        });
+        return unsubscribe;
+    }, []);
+
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <ActivityIndicator size="large" />
+            </View>
+        );
+    }
+
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-                {/* <Stack.Screen name="Welcome" component={WelcomeScreen} /> */}
-                <Stack.Screen name="Intro" component={IntroScreen} />
-                <Stack.Screen name="Register" component={RegisterScreen} />
-                <Stack.Screen name="Login" component={LoginScreen} />
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="ProfileNavigator" component={ProfileNavigator} />
-                <Stack.Screen name="RequestNavigator" component={RequestNavigator} />
-                <Stack.Screen name="EligibilityNavigator" component={EligibilityNavigator} />
-            </Stack.Navigator>
-            {/* <BottomTabNavigator/> */}
+            {user ? <AppStack /> : <AuthStack />}
         </NavigationContainer>
-    )
+    );
+}
+
+export default function App() {
+    return (
+        <AuthenticatedUserProvider>
+            <AppNavigator />
+        </AuthenticatedUserProvider>
+    );
 }

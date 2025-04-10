@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     eligibleText: {
-        color: "#28a745", // Green for eligible
+        color: "#28a745", 
     },
     notEligibleText: {
-        color: "#dc3545", // Red for not eligible
+        color: "#dc3545",
     },
     button: {
         backgroundColor: "#007bff",
