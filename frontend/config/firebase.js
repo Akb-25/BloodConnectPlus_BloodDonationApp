@@ -1,18 +1,33 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { connectAuthEmulator, getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from 'firebase/storage';
-import { initializeAuth } from "firebase/auth";
-// import { getReactNativePersistence } from "firebase/auth/dist/rn/persistence";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Constants } from "expo-constants";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeAuth, connectAuthEmulator, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+import { Constants } from "expo-constants";
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDz2VGtuTJUulaqK4XIZMLiq6JHuNN_FSg",
+//   authDomain: "bloodconnectplus.firebaseapp.com",
+//   projectId: "bloodconnectplus",
+//   storageBucket: "bloodconnectplus.firebasestorage.app",
+//   messagingSenderId: "553409427151",
+//   appId: "1:553409427151:web:5c6531c079e44f48a2a9ba",
+//   measurementId: "G-ZVYW0B92MJ"
+// };
+
+// const app = initializeApp(firebaseConfig);
+
+// const db = getFirestore(app);
+// const storage = getStorage(app);
+// const auth = initializeAuth(app);
+// connectAuthEmulator(auth, 'http://localhost:9099');
+// // const analytics = getAnalytics(app);
+
+// export { auth, db, storage };
+
+ const firebaseConfig = {
   apiKey: "AIzaSyDz2VGtuTJUulaqK4XIZMLiq6JHuNN_FSg",
   authDomain: "bloodconnectplus.firebaseapp.com",
   projectId: "bloodconnectplus",
@@ -22,15 +37,7 @@ const firebaseConfig = {
   measurementId: "G-ZVYW0B92MJ"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// const db = getFirestore(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
-const auth = initializeAuth(app);
-// connectAuthEmulator(auth, 'http://127.0.0.1:9099');
+const auth = getAuth(app);
 
-
-// const analytics = getAnalytics(app);
-
-export { auth, db, storage };
+export { auth };

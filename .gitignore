@@ -4,3 +4,6 @@ backend/bloodconnectplus_key.json
 backend/.env
 backend/README.md
 backend/src/node_modules
+
+Auth/my-app/node_modules
+Auth/my-app/expo
