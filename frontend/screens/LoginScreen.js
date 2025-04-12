@@ -1,43 +1,35 @@
 import React, { useState } from "react";
 import { TextInput, StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 import Header from "../components/Header";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-import { auth } from "../config/firebase.js";
+import { supabase } from "../config/supabase";
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // const navigation = useNavigation();
 
-    const login = async (email, password) => {
+    const onHandleLogin = async () => {
         if (!email || !password) {
             Alert.alert("Error", "All fields are required");
             return;
         }
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = auth.currentUser;
-            console.log("User logged in successfully:", userCredential.user);
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
+
+            if (error) {
+                Alert.alert("Login Failed", error.message);
+                return;
+            }
+
             Alert.alert("Success", "Logged in successfully!");
             navigation.navigate("Home");
-        } catch (error) {
-            Alert.alert("Login Failed", error.message);
+
+        } catch (err) {
+            Alert.alert("Error", "Something went wrong");
         }
-    };
-        
-    
-   
-    const onHandleLogin = (e) => {
-      e.preventDefault();
-      console.log(email)
-      console.log(password)
-      if (email !== "" && password !== "") {
-        console.log("Trying to log in now")
-        signInWithEmailAndPassword(auth, email, password)
-          .then(() => console.log("Login success"))
-          .catch((err) => Alert.alert("Login error", err.message));
-      }
     };
 
     return (
@@ -82,7 +74,7 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F9FAFB", // light neutral background
+        backgroundColor: "#F9FAFB",
     },
     form: {
         flex: 1,
@@ -91,7 +83,7 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 16,
-        color: "#111827", // black text
+        color: "#111827",
         marginBottom: 6,
         marginTop: 14,
         fontWeight: "500",
@@ -99,20 +91,20 @@ const styles = StyleSheet.create({
     input: {
         height: 42,
         borderBottomWidth: 1,
-        borderColor: "#9CA3AF", // gray border
+        borderColor: "#9CA3AF",
         marginBottom: 12,
         fontSize: 16,
         paddingHorizontal: 4,
-        color: "#111827", // black input text
+        color: "#111827",
     },
     forgotText: {
         fontSize: 13,
-        color: "#111827", // black text
+        color: "#111827",
         textAlign: "right",
         marginBottom: 20,
     },
     button: {
-        backgroundColor: "#DC2626", // red button
+        backgroundColor: "#DC2626",
         paddingVertical: 14,
         borderRadius: 12,
         alignItems: "center",
@@ -129,7 +121,7 @@ const styles = StyleSheet.create({
         fontWeight: "600",
     },
     registerText: {
-        color: "#111827", // black text
+        color: "#111827",
         textAlign: "center",
         fontSize: 16,
         fontWeight: "500",

@@ -1,14 +1,12 @@
 import 'react-native-url-polyfill/auto'
-import React from 'react'
 import { useState, useEffect } from 'react'
-import { supabase } from '../config/supabase.js'
-import Auth from './Auth'
+import { supabase } from './lib/supabase'
+import Auth from './components/Auth'
 import { View, Text } from 'react-native'
 import { Session } from '@supabase/supabase-js'
 
-
 export default function App() {
-  const [session, setSession] = useState(null)
+  const [session, setSession] = useState<Session | null>(null)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
