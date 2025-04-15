@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform} from "react-native";
 import Header from "../components/Header";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -60,196 +60,209 @@ export default function RequestScreen({ navigation }) {
         { label: "Other", value: "Other" },
     ];
 
+    const validateAndNavigate = () => {
+        // if (!recipientName || !recipientPhone || !recipientSelectedCity || !recipientSelectedCountry || !bloodGroup || !address || !amountOfBlood) 
+        if (!bloodGroup) 
+            {
+            alert("Please fill in all required fields.");
+            return;
+            }
+        else
+        {
+            navigation.navigate("ConfirmRequest", {
+                recipientName,
+                recipientPhone,
+                recipientSelectedCity,
+                recipientSelectedCountry,
+                date,
+                time,
+                bloodGroup,
+                gender,
+                hospitalName,
+                address,
+                amountOfBlood,
+                reason,
+                contactPersonName,
+                contactPersonPhone,
+            });
+        }
+    }
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Header title="Request Blood" />
-            <Text style={styles.title}>Enter the details of the recipient</Text>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={{ flex: 1 }}>
 
-            <Text style={styles.label}>Recipient's Name</Text>
-            <TextInput
-                value={recipientName}
-                onChangeText={setRecipientName}
-                style={styles.input}
-                placeholder="Enter recipient's name"
-            />
+            <ScrollView contentContainerStyle={styles.container}>
+                <Header title="Request Blood" />
+                <Text style={styles.title}>Enter the details of the recipient</Text>
 
-            <Text style={styles.label}>Recipient's Phone Number</Text>
-            <TextInput
-                value={recipientPhone}
-                onChangeText={setRecipientPhone}
-                style={styles.input}
-                placeholder="Enter recipient's phone number"
-                keyboardType="phone-pad"
-            />
+                <Text style={styles.label}>Recipient's Name</Text>
+                <TextInput
+                    value={recipientName}
+                    onChangeText={setRecipientName}
+                    style={styles.input}
+                    placeholder="Enter recipient's name"
+                />
 
-            <Text style={styles.label}>Recipient's Country</Text>
-            <Picker
-                selectedValue={recipientSelectedCountry}
-                onValueChange={(value) => {
-                    setRecipientSelectedCountry(value);
-                    setRecipientSelectedCity(""); 
-                }}
-                style={styles.picker}
-            >
-                <Picker.Item label="Select Country" value="" />
-                {countries.map((country) => (
-                    <Picker.Item key={country.value} label={country.label} value={country.value} />
-                ))}
-            </Picker>
+                <Text style={styles.label}>Recipient's Phone Number</Text>
+                <TextInput
+                    value={recipientPhone}
+                    onChangeText={setRecipientPhone}
+                    style={styles.input}
+                    placeholder="Enter recipient's phone number"
+                    keyboardType="phone-pad"
+                />
 
-            {recipientSelectedCountry !== "" && (
-                <>
-                    <Text style={styles.label}>Recipient's City</Text>
-                    <Picker
-                        selectedValue={recipientSelectedCity}
-                        onValueChange={setRecipientSelectedCity}
-                        style={styles.picker}
-                    >
-                        <Picker.Item label="Select City" value="" />
-                        {cities[recipientSelectedCountry].map((city) => (
-                            <Picker.Item key={city.value} label={city.label} value={city.value} />
-                        ))}
-                    </Picker>
-                </>
-            )}
+                <Text style={styles.label}>Recipient's Country</Text>
+                <Picker
+                    selectedValue={recipientSelectedCountry}
+                    onValueChange={(value) => {
+                        setRecipientSelectedCountry(value);
+                        setRecipientSelectedCity(""); 
+                    }}
+                    style={styles.picker}
+                >
+                    <Picker.Item label="Select Country" value="" />
+                    {countries.map((country) => (
+                        <Picker.Item key={country.value} label={country.label} value={country.value} />
+                    ))}
+                </Picker>
 
-                    
-            <Text style={styles.label}>Date</Text>
-            <TouchableOpacity onPress={() => setShowDatepicker(true)}>
-            <Text style={styles.input}>{date.toLocaleDateString()}</Text>
-            </TouchableOpacity>
-            {showDatepicker && (
-            <DateTimePicker
-                value={date}
-                mode="date"
-                display="default"
-                onChange={(_, selectedDate) => {
-                setDate(selectedDate || date);
-                setShowDatepicker(false);
-                }}
-                style={styles.picker}
-            />
-            )}
+                {recipientSelectedCountry !== "" && (
+                    <>
+                        <Text style={styles.label}>Recipient's City</Text>
+                        <Picker
+                            selectedValue={recipientSelectedCity}
+                            onValueChange={setRecipientSelectedCity}
+                            style={styles.picker}
+                        >
+                            <Picker.Item label="Select City" value="" />
+                            {cities[recipientSelectedCountry].map((city) => (
+                                <Picker.Item key={city.value} label={city.label} value={city.value} />
+                            ))}
+                        </Picker>
+                    </>
+                )}
 
-            <Text style={styles.label}>Time</Text>
-            <TouchableOpacity onPress={() => setShowTimepicker(true)}>
-            <Text style={styles.input}>{time.toLocaleTimeString()}</Text>
-            </TouchableOpacity>
-            {showTimepicker && (
-            <DateTimePicker
-                value={time}
-                mode="time"
-                display="default"
-                onChange={(_, selectedTime) => {
-                setTime(selectedTime || time);
-                setShowTimepicker(false);
-                }}
-                style={styles.picker}
-            />
-            )}
+                        
+                <Text style={styles.label}>Date</Text>
+                <TouchableOpacity onPress={() => setShowDatepicker(true)}>
+                <Text style={styles.input}>{date.toLocaleDateString()}</Text>
+                </TouchableOpacity>
+                {showDatepicker && (
+                <DateTimePicker
+                    value={date}
+                    mode="date"
+                    display="default"
+                    onChange={(_, selectedDate) => {
+                    setDate(selectedDate || date);
+                    setShowDatepicker(false);
+                    }}
+                    style={styles.picker}
+                />
+                )}
 
-            <Text style={styles.label}>Blood Group</Text>
-            <Picker
-                selectedValue={bloodGroup}
-                onValueChange={setBloodGroup}
-                style={styles.picker}
-            >
-                {bloodGroups.map((group) => (
-                    <Picker.Item key={group.value} label={group.label} value={group.value} />
-                ))}
-            </Picker>
+                <Text style={styles.label}>Time</Text>
+                <TouchableOpacity onPress={() => setShowTimepicker(true)}>
+                <Text style={styles.input}>{time.toLocaleTimeString()}</Text>
+                </TouchableOpacity>
+                {showTimepicker && (
+                <DateTimePicker
+                    value={time}
+                    mode="time"
+                    display="default"
+                    onChange={(_, selectedTime) => {
+                    setTime(selectedTime || time);
+                    setShowTimepicker(false);
+                    }}
+                    style={styles.picker}
+                />
+                )}
 
-            <Text style={styles.label}>Gender</Text>
-            <Picker
-                selectedValue={gender}
-                onValueChange={setGender}
-                style={styles.picker}
-            >
-                {genders.map((g) => (
-                    <Picker.Item key={g.value} label={g.label} value={g.value} />
-                ))}
-            </Picker>
+                <Text style={styles.label}>Blood Group</Text>
+                <Picker
+                    selectedValue={bloodGroup}
+                    onValueChange={setBloodGroup}
+                    style={styles.picker}
+                >
+                    {bloodGroups.map((group) => (
+                        <Picker.Item key={group.value} label={group.label} value={group.value} />
+                    ))}
+                </Picker>
 
-            <Text style={styles.label}>Hospital Name</Text>
-            <TextInput
-                value={hospitalName}
-                onChangeText={setHospitalName}
-                style={styles.input}
-                placeholder="Enter hospital name"
-            />
+                <Text style={styles.label}>Gender</Text>
+                <Picker
+                    selectedValue={gender}
+                    onValueChange={setGender}
+                    style={styles.picker}
+                >
+                    {genders.map((g) => (
+                        <Picker.Item key={g.value} label={g.label} value={g.value} />
+                    ))}
+                </Picker>
 
-            <Text style={styles.label}>Address</Text>
-            <TextInput
-                value={address}
-                onChangeText={setAddress}
-                style={styles.input}
-                placeholder="Enter address"
-            />
+                <Text style={styles.label}>Hospital Name</Text>
+                <TextInput
+                    value={hospitalName}
+                    onChangeText={setHospitalName}
+                    style={styles.input}
+                    placeholder="Enter hospital name"
+                />
 
-            <Text style={styles.label}>Amount of Blood Needed</Text>
-            <TextInput
-                value={amountOfBlood}
-                onChangeText={setAmountOfBlood}
-                style={styles.input}
-                placeholder="Enter amount of blood needed"
-                keyboardType="numeric"
-            />
+                <Text style={styles.label}>Address</Text>
+                <TextInput
+                    value={address}
+                    onChangeText={setAddress}
+                    style={styles.input}
+                    placeholder="Enter address"
+                />
 
-            <Text style={styles.label}>Reason for Blood Request</Text>
-            <TextInput
-                value={reason}
-                onChangeText={setReason}
-                style={styles.textarea}
-                placeholder="Enter reason for blood request"
-                multiline
-                numberOfLines={4}
-            />
+                <Text style={styles.label}>Amount of Blood Needed</Text>
+                <TextInput
+                    value={amountOfBlood}
+                    onChangeText={setAmountOfBlood}
+                    style={styles.input}
+                    placeholder="Enter amount of blood needed"
+                    keyboardType="numeric"
+                />
 
-            <Text style={styles.label}>Contact Person's Name (if different)</Text>
-            <TextInput
-                value={contactPersonName}
-                onChangeText={setContactPersonName}
-                style={styles.input}
-                placeholder="Enter contact person's name"
-            />
+                <Text style={styles.label}>Reason for Blood Request</Text>
+                <TextInput
+                    value={reason}
+                    onChangeText={setReason}
+                    style={styles.textarea}
+                    placeholder="Enter reason for blood request"
+                    multiline
+                    numberOfLines={4}
+                />
 
-            <Text style={styles.label}>Contact Person's Phone Number (if different)</Text>
-            <TextInput
-                value={contactPersonPhone}
-                onChangeText={setContactPersonPhone}
-                style={styles.input}
-                placeholder="Enter contact person's phone number"
-                keyboardType="phone-pad"
-            />
+                <Text style={styles.label}>Contact Person's Name (if different)</Text>
+                <TextInput
+                    value={contactPersonName}
+                    onChangeText={setContactPersonName}
+                    style={styles.input}
+                    placeholder="Enter contact person's name"
+                />
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() =>
-                    navigation.navigate("ConfirmRequest", {
-                        recipientName,
-                        recipientPhone,
-                        recipientSelectedCity,
-                        recipientSelectedCountry,
-                        date,
-                        time,
-                        bloodGroup,
-                        gender,
-                        hospitalName,
-                        address,
-                        amountOfBlood,
-                        reason,
-                        contactPersonName,
-                        contactPersonPhone,
-                    })
-                }
-            >
-                <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>
+                <Text style={styles.label}>Contact Person's Phone Number (if different)</Text>
+                <TextInput
+                    value={contactPersonPhone}
+                    onChangeText={setContactPersonPhone}
+                    style={styles.input}
+                    placeholder="Enter contact person's phone number"
+                    keyboardType="phone-pad"
+                />
 
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={styles.backText}>Back</Text>
-            </TouchableOpacity>
-        </ScrollView>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={validateAndNavigate}
+                >
+                    <Text style={styles.buttonText}>Next</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Text style={styles.backText}>Back</Text>
+                </TouchableOpacity>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 

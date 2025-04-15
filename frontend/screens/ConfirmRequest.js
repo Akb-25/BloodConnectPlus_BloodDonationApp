@@ -1,14 +1,20 @@
-import React from "react";
+import React , { useContext } from "react";
 import {
     ScrollView,
     View,
     Text,
     StyleSheet,
     TouchableOpacity,
+    Alert,
 } from "react-native";
 import Header from "../components/Header";
+import axios from "axios";
+import { UserContext } from "../context/UserContext.js";
+
+
 
 export default function ConfirmRequest({ navigation, route }) {
+    const { userId } = useContext(UserContext);
     const {
         recipientName,
         recipientPhone,
@@ -26,10 +32,33 @@ export default function ConfirmRequest({ navigation, route }) {
         contactPersonPhone,
     } = route.params;
 
-    function handleSubmit() {
-        console.log("Submitting request details:", route.params);
-        navigation.navigate("RequestMap", { recipientSelectedCity, bloodGroup });
-    }
+    const uploadRequest = async () => {
+        try {
+            axios.post("http://192.168.0.105:5000/request/upload-request", {
+                userId,
+                recipientName,
+                recipientPhone,
+                recipientSelectedCity,
+                recipientSelectedCountry,
+                date,
+                time,
+                bloodGroup,
+                gender,
+                hospitalName,
+                address,
+                amountOfBlood,
+                reason,
+                contactPersonName,
+                contactPersonPhone
+            });
+            // console.log("Request uploaded successfully:", response.data);
+            Alert.alert("Request has been succesfully uploaded ");
+            navigation.navigate("RequestMap", { recipientSelectedCity, bloodGroup});
+        } catch (error) {
+            console.error("Error uploading request:", error);
+        }
+    };
+    
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -53,7 +82,8 @@ export default function ConfirmRequest({ navigation, route }) {
                 <Field label="Contact Person Phone" value={contactPersonPhone} />
             </View>
 
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            {/* <TouchableOpacity style={styles.button} onPress={handleSubmit}> */}
+            <TouchableOpacity style={styles.button} onPress={uploadRequest}>
                 <Text style={styles.buttonText}>🚑 Submit Request</Text>
             </TouchableOpacity>
 

@@ -1,13 +1,11 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import axios from "axios";
 import { v4 as uuidv4} from "uuid";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 // import { UserContext } from "../context/UserContext.js";
 
-export default function ProfileSetup({ route, navigation }) {
+export default function PersonProfileUpdate({ route, navigation }) {
     const { name, phone, selectedCountry, selectedCity, dateOfBirth, gender, aboutYourself, isDonor, occupation, photo } = route.params;
     // const { setUserId } = useContext(UserContext);
     const handleSubmit = async () => {
@@ -42,7 +40,7 @@ export default function ProfileSetup({ route, navigation }) {
                 console.log(`${pair[0]}: ${pair[1]}`);
             }
     
-            const response = await fetch("http://192.168.1.6:5000/user/upload", {
+            const response = await fetch("http://192.168.1.6:5000/user/update", {
                 method: "POST",
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -55,7 +53,6 @@ export default function ProfileSetup({ route, navigation }) {
     
             if (response.ok) {
                 // setUserId(userId);
-                await AsyncStorage.setItem("customUserId", userId);
                 navigation.navigate("Home");
                 Alert.alert("Profile Submitted", "Your profile has been successfully submitted.");
             } else {

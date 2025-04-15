@@ -25,7 +25,7 @@ export default function LoginScreen({ navigation }) {
             }
 
             Alert.alert("Success", "Logged in successfully!");
-            navigation.navigate("Home");
+            navigation.navigate("ProfileNavigator");
 
         } catch (err) {
             Alert.alert("Error", "Something went wrong");

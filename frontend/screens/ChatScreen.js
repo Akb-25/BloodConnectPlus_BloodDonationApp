@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View, ScrollView, Text, TextInput, StyleSheet,
   TouchableOpacity, KeyboardAvoidingView,
   Platform, SafeAreaView
 } from "react-native";
 import axios from "axios";
-import { auth } from "../config/firebase.js"; 
+import { UserContext } from "../context/UserContext.js";
+
 const ChatScreen = ({ route }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
-
-  const currentUserId = auth.currentUser?.uid;
-  const donorId = route.params?.donorId || "donorUID"; 
-  const donorName = route.params?.donorName || "Donor";
+  const { userId } = useContext(UserContext);
+  const { otherUserId, otherUserName } = route.params;
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await axios.get(`http://<YOUR_BACKEND_URL>/api/messages/${currentUserId}/${donorId}`);
+        const res = await axios.get(`http://172.168.1.6:5000/chat/messages/${currentUserId}/${otherUserId}`);
         setMessages(res.data);
       } catch (error) {
         console.error("Error fetching messages:", error);

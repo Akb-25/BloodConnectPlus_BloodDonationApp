@@ -14,7 +14,7 @@ const ChatDonors = () => {
   const fetchChats = async () => {
     try {
       const uid = await getCurrentUserId();
-      const res = await axios.get(`http://<YOUR_SERVER_URL>/api/chat/${uid}`);
+      const res = await axios.get(`http://192.168.1.6:5000/api/chat/${uid}`);
       setChats(res.data);
     } catch (err) {
       console.error("Error fetching chats:", err.message);

@@ -1,12 +1,12 @@
 import express from "express";
-import { getDonors, getProfile, uploadDonors, uploadProfileData } from "../controllers/userController.js";
-import upload from "../middlewares/uploadMiddleware.js";
+import {  uploadProfile, getProfile, updateProfile, deleteProfile } from "../controllers/userController.js";
+import upload from "../middleware/uploadMiddleware.js";
 
 const router = express.Router();
 
-router.post("/upload", upload.single("photo"), uploadProfileData);
+router.post("/upload", upload, uploadProfile);
 router.get("/profile/:id", getProfile);
-router.post("/donors/upload", uploadDonors);
-router.get("/donors/:city", getDonors);
+router.post("/update", updateProfile);
+router.get("/delete/:id", deleteProfile);
 
 export default router;
