@@ -1,15 +1,16 @@
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native";
+import { View, Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-const ImageCard = ({ img, redirectLink, navigation }) => {
+const ImageCard = ({ img, title, redirectLink, navigation }) => {
     return (
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(redirectLink)}>
             <View style={styles.imageContainer}>
                 <Image source={img} style={styles.image} />
             </View>
+            <View style={styles.textContainer}>
+                <Text style={styles.cardText}>{title}</Text>
+            </View>
         </TouchableOpacity>
-
     );
 };
 
@@ -27,18 +28,29 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 200, 
+        height: "45%",
+        padding: 10,
     },
     imageContainer: {
-        width: '50%',
-        height: '50%',
+        width: '100%',
+        height: '90%',
         justifyContent: 'center',
         alignItems: 'center',
     },
     image: {
-        width: '100%',
-        height: '100%',
+        width: '30%',
+        height: '50%',
         resizeMode: 'cover',
+        borderRadius: 10,
+    },
+    textContainer: {
+        marginTop: 1,  
+        // alignItems: 'center',
+    },
+    cardText: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#333',
     },
 });
 

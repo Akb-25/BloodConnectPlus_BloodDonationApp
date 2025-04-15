@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import axios from "axios";
 
 export default function ProfileStep3({ route, navigation }) {
@@ -10,7 +10,7 @@ export default function ProfileStep3({ route, navigation }) {
 
     const handleSubmit = async () => {
         try{
-            navigation.navigate("ProfileView", {
+            navigation.navigate("PersonProfileUpdate", {
                 name,
                 phone,
                 selectedCity,

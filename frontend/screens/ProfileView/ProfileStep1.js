@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ScrollView, View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 
 export default function ProfileStep1({ navigation }) {
     const [name, setName] = useState("");
@@ -91,7 +91,7 @@ export default function ProfileStep1({ navigation }) {
                 <TouchableOpacity
                     style={styles.nextButton}
                     onPress={() =>
-                        navigation.navigate("ProfileStep2", { name, phone, selectedCity, selectedCountry })
+                        navigation.navigate("UpdateProfileStep2", { name, phone, selectedCity, selectedCountry })
                     }
                 >
                     <Text style={styles.nextButtonText}>Next</Text>
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingTop: 10,
         backgroundColor: "#f8f9fa",
+        marginBottom: 45,
     },
     nextButton: {
         backgroundColor: "red",

@@ -82,11 +82,11 @@ export default function ProfileStep1({ navigation }) {
             />
 
             <TouchableOpacity onPress={() => navigation.navigate("ProfileStep3", { dateOfBirth, gender, aboutYourself, isDonor })}>
-                <Text style={{ fontSize: 20 }}>➡️ Next</Text>
+                <Text style={{ fontSize: 20 }}>Next</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ fontSize: 18, color: "red" }}>⬅️ Back</Text>
+                <Text style={{ fontSize: 18, color: "red" }}>Back</Text>
             </TouchableOpacity>
         </ScrollView>
     );

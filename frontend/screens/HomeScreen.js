@@ -1,26 +1,43 @@
-import React from "react";
-import { ScrollView, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
-import Header from "../components/Header";
+import React, { useContext, useEffect } from "react";
+import { ScrollView, StyleSheet, Text, Image, View, useWindowDimensions } from "react-native";
+import Header, { HEADER_HEIGHT_PERCENT } from "../components/Header";
 import ImageCard from "../components/ImageCard";
-
+import { UserContext } from "../context/UserContext";
 function donorStatus() {
   return "You are eligible to donate";
 }
 
+
 export default function HomeScreen({ navigation }) {
+  const { setUserId } = useContext(UserContext);
+  const { width, height } = useWindowDimensions();
+  const headerHeight = height * HEADER_HEIGHT_PERCENT;
+
+  useEffect(() => {
+    setUserId("njdsnk");
+  }, []);
+
   return (
-    <ScrollView style={styles.container}>
+    <View style={{ flex: 1}}>
       <Header title="Home Screen" />
+      <ScrollView style={[styles.container, { paddingTop: headerHeight }]}>
+      
       <Text style={styles.locationText}>Bangalore</Text>
-      <Image source={require("../assets/images/home-image-main.png")} style={styles.imageHero} />
+      <Image source={require("../assets/images/home-img.jpg")} style={styles.imageHero} />
       
       <Text style={styles.donorStatusContent}>{donorStatus()}</Text>
 
 
-      <ImageCard img={require("../assets/images/maindonor-card.png")} />
-      <ImageCard img={require("../assets/images/bloodbank-card.png")} />
-      <ImageCard img={require("../assets/images/hospital-card.png")} />
-    </ScrollView>
+      <ImageCard
+        img={require("../assets/images/maindonor-card.png")}
+        title="Find Donor"
+        navigation={navigation}
+        redirectLink="RequestNavigator" 
+      />
+      {/* <ImageCard img={require("../assets/images/bloodbank-card.png")} />
+      <ImageCard img={require("../assets/images/hospital-card.png")} /> */}
+      </ScrollView>
+    </View>
   );
 }
 
