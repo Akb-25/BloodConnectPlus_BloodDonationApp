@@ -40,6 +40,18 @@ function AuthStack() {
 }
 
 function AppStack() {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Intro" component={IntroScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="ProfileNavigator" component={ProfileNavigator} />
+            <Stack.Screen name="RequestNavigator" component={RequestNavigator} />
+            <Stack.Screen name="EligibilityNavigator" component={EligibilityNavigator} />
+            <Stack.Screen name="ChatNavigator" component={ChatNavigator} />
+        </Stack.Navigator>
+    );
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Intro" component={IntroScreen} />
@@ -51,6 +63,7 @@ function AppStack() {
     </Stack.Navigator>
   );
 }
+
 
 function AppNavigator() {
   const { user, setUser } = useContext(AuthenticatedUserContext);
@@ -86,6 +99,12 @@ function AppNavigator() {
     );
   }
 
+    return (
+        <NavigationContainer>
+            {user ? <AppStack /> : <AuthStack />}
+            <AppStack/>
+        </NavigationContainer>
+    );
   return (
     <NavigationContainer>
       {user ? <AppStack /> : <AuthStack />}

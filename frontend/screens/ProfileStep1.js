@@ -85,7 +85,7 @@ export default function ProfileStep1({ navigation }) {
                     style={styles.backButton}
                     onPress={() => navigation.goBack()}
                 >
-                    <Text style={styles.backButtonText}>⬅️ Back</Text>
+                    <Text style={styles.backButtonText}>Back</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -94,7 +94,7 @@ export default function ProfileStep1({ navigation }) {
                         navigation.navigate("ProfileStep2", { name, phone, selectedCity, selectedCountry })
                     }
                 >
-                    <Text style={styles.nextButtonText}>Next ➡️</Text>
+                    <Text style={styles.nextButtonText}>Next</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>

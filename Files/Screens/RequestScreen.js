@@ -184,11 +184,11 @@ export default function RequestScreen() {
                 recipientName, recipientPhone, recipientSelectedCity, recipientSelectedCountry, date, time, 
                 bloodGroup, gender, hospitalName, address, amountOfBlood, reason, contactPersonName, contactPersonPhone
              })}>
-                <Text style={{ fontSize: 20 }}>➡️ Next</Text>
+                <Text style={{ fontSize: 20 }}>Next</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ fontSize: 18, color: "red" }}>⬅️ Back</Text>
+                <Text style={{ fontSize: 18, color: "red" }}>Back</Text>
             </TouchableOpacity>            
 
             <Text>Contact Person's Phone Number (if different)</Text>

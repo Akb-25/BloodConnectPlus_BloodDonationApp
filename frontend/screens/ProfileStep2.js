@@ -96,7 +96,7 @@ export default function ProfileStep2({ route, navigation }) {
 
                 <View style={styles.footerButtons}>
                     <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                        <Text style={styles.backButtonText}>⬅️ Back</Text>
+                        <Text style={styles.backButtonText}>Back</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -108,7 +108,7 @@ export default function ProfileStep2({ route, navigation }) {
                             })
                         }
                     >
-                        <Text style={styles.buttonText}>➡️ Next</Text>
+                        <Text style={styles.buttonText}>Next</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

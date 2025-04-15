@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import axios from "axios";
-import { getCurrentUserId } from "../utils/auth"; // implement this to return logged-in user ID
+// import { getCurrentUserId } from "../utils/auth"; // implement this to return logged-in user ID
 
 const ChatDonors = () => {
   const navigation = useNavigation();

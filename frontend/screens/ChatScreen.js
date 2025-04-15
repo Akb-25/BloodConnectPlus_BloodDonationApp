@@ -5,7 +5,7 @@ import {
   Platform, SafeAreaView
 } from "react-native";
 import axios from "axios";
-import { auth } from "../firebaseConfig"; 
+import { auth } from "../config/firebase.js"; 
 const ChatScreen = ({ route }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");

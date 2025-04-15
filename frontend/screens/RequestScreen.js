@@ -243,11 +243,11 @@ export default function RequestScreen({ navigation }) {
                     })
                 }
             >
-                <Text style={styles.buttonText}>➡️ Next</Text>
+                <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={styles.backText}>⬅️ Back</Text>
+                <Text style={styles.backText}>Back</Text>
             </TouchableOpacity>
         </ScrollView>
     );
