@@ -19,7 +19,7 @@ A cross-platform mobile app that connects blood donors and recipients. Built usi
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
 | Layer         | Tech Used                       |
 |---------------|---------------------------------|
@@ -86,17 +86,20 @@ CLOUDINARY_SECRET= api_secret
 ```
 
 # Screenshots
-
-![register](https://github.com/user-attachments/assets/143810cd-9769-46ad-8e5a-1e237347db38)
-![login](https://github.com/user-attachments/assets/9489e1ef-c062-4266-8441-d85a96546503)
-![request](https://github.com/user-attachments/assets/823c5392-c5bd-4cbe-9e36-3cd4714f680b)
-![map](https://github.com/user-attachments/assets/b4074094-c660-460d-b279-2cc06f683c5d)
-![home](https://github.com/user-attachments/assets/40e907a8-1f50-47c7-95b2-c2da7db8242a)
-![requests](https://github.com/user-attachments/assets/c9519aa7-375f-47ce-9837-8b36a5a93747)
-![chat](https://github.com/user-attachments/assets/93a58474-a4fb-483a-96f0-3964e7e2eca8)
-![schedule](https://github.com/user-attachments/assets/6e221059-c53b-480d-9387-29db4a127ed4)
-![scheduled](https://github.com/user-attachments/assets/07bcb55b-3072-454b-bee3-abac63835a2b)
-![profile](https://github.com/user-attachments/assets/82fa3eb1-8a60-479c-b88d-9579404e2222)
-![check](https://github.com/user-attachments/assets/fb3a331d-e7fa-4fa8-9980-f01aa4451787)
-![lastCheck](https://github.com/user-attachments/assets/679b98ff-4fe4-44c9-9890-f260bfec69a0)
-![eligibilityResult](https://github.com/user-attachments/assets/7aa010fb-1fdf-4895-9181-1a0f2f7ee27d)
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;">
+  <img src="https://github.com/user-attachments/assets/143810cd-9769-46ad-8e5a-1e237347db38" style="width: 33%; height: 750px; object-fit: cover;"/>
+  <img src="https://github.com/user-attachments/assets/9489e1ef-c062-4266-8441-d85a96546503" style="width: 33%; height: 750px; object-fit: cover;"/>
+  <img src="https://github.com/user-attachments/assets/823c5392-c5bd-4cbe-9e36-3cd4714f680b" style="width: 33%; height:  750px; object-fit: cover;"/>
+  
+  <img src="https://github.com/user-attachments/assets/b4074094-c660-460d-b279-2cc06f683c5d" style="width: 33%; height: 750px; object-fit: cover;"/>
+  <img src="https://github.com/user-attachments/assets/40e907a8-1f50-47c7-95b2-c2da7db8242a" style="width: 33%; height: 750px; object-fit: cover;"/>
+  <img src="https://github.com/user-attachments/assets/c9519aa7-375f-47ce-9837-8b36a5a93747" style="width: 33%; height: 750px; object-fit: cover;"/>
+  
+  <img src="https://github.com/user-attachments/assets/93a58474-a4fb-483a-96f0-3964e7e2eca8" style="width: 33%; height: 750px; object-fit: cover;"/>
+  <img src="https://github.com/user-attachments/assets/6e221059-c53b-480d-9387-29db4a127ed4" style="width: 33%; height: 750px; object-fit: cover;"/>
+  <img src="https://github.com/user-attachments/assets/07bcb55b-3072-454b-bee3-abac63835a2b" style="width: 33%; height: 750px; object-fit: cover;"/>
+  
+  <img src="https://github.com/user-attachments/assets/679b98ff-4fe4-44c9-9890-f260bfec69a0" style="width: 33%; height: 750px; object-fit: cover;"/>
+  <img src="https://github.com/user-attachments/assets/7aa010fb-1fdf-4895-9181-1a0f2f7ee27d" style="width: 33%; height: 750px; object-fit: cover;"/>
+  <img src="https://github.com/user-attachments/assets/82fa3eb1-8a60-479c-b88d-9579404e2222" style="width: 33%; height: 750px; object-fit: cover;"/>
+</div>
