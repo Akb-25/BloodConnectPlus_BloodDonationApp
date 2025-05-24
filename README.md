@@ -1,6 +1,6 @@
 # Blood Connect - Blood Donation App
 
-A cross-platform mobile app that connects blood donors and recipients. Built using React Native, NodeJS, Express.js Firebase, Supabase and Cloudinary.
+A cross-platform mobile app that uses geo-location to connect blood donors and recipients, enabling quick and safe connections. Built using React Native, Express.js, NodeJS, Firebase, Supabase and Cloudinary.
 
 ---
 
